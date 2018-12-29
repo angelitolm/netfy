@@ -1,0 +1,40 @@
+{
+  "name": "netfy",
+  "version": "1.0.0",
+  "description": "The Network Gear",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon run index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelitolm/netfly.git"
+  },
+  "keywords": [
+    "network",
+    "squid",
+    "ldap",
+    "inventary",
+    "monitoring"
+  ],
+  "author": "Angel Labrada Massó",
+  "contributors": "Omar Leonardo Piñero Arencibia, Eduardo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/angelitolm/netfly/issues"
+  },
+  "homepage": "https://github.com/angelitolm/netfly#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "crypto": "^1.0.1",
+    "express": "^4.16.4",
+    "jwt-simple": "^0.5.5",
+    "moment": "^2.23.0",
+    "mongoose": "^5.4.0",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
