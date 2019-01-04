@@ -13,8 +13,8 @@ const path = require('path')
 const passport = require('passport')
 const flash = require('connect-flash')
 const session = require('express-session')
-const api = require('./src/routes/app.routes')
-const { SECRET_TOKEN } = require('./src/configs/passport')
+const api = require('./src/routes/app')
+const { SECRET_TOKEN } = require('./src/configs/parameters')
 
 // ===============================================================
 // Initializing App with Express Framework
@@ -31,8 +31,9 @@ app.use(express.json())
 // Using Session Variables
 app.use(session({
   secret: SECRET_TOKEN,
-  resave: false,
-  seveUnitialized: false
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: true }
 }))
 // Initializing passport
 app.use(passport.initialize())
@@ -44,12 +45,12 @@ app.use(flash())
 // ===============================================================
 // Routes API
 // ===============================================================
-app.use(api)
+// app.use(api)
 
 // Route Login
-app.get('/login', (req, res) => {
-  res.send({ message: 'login' })
-})
+// app.get('/login', (req, res) => {
+//   res.send({ message: 'login' })
+// })
 
 // ===============================================================
 // Static files

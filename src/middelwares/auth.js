@@ -1,23 +1,21 @@
+/*
+  This file is a part of Netfy
+  Author: Angel Labrada Massó
+ */
 'use strict'
 
-// Import Modules
-const services = require('../services')
+// ===============================================================
+// User is Authenticated
+// ===============================================================
+const auth = {}
 
-function isAuthenticated (req, res, next) {
-  if (!req.headers.authorization) {
-    return res.status(403).send({ message: 'No authorization' })
+auth.isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next()
   }
 
-  const token = req.headers.authorization.split(' ')[1]
-
-  services.decodeToken(token)
-    .then(response => {
-      req.user = response
-      next()
-    })
-    .catch(response => {
-      res.status(response.status)
-    })
+  req.flash('error_msg', 'Not Authorized')
+  res.status(403).send({ message: 'Not Authorized' })
 }
 
-module.exports = isAuthenticated
+module.exports = auth
