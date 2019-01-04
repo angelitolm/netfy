@@ -35,7 +35,7 @@ app.use(session({
   seveUnitialized: false
 }))
 // Initializing passport
-app.use(passport.initialize)
+app.use(passport.initialize())
 // Save Authentication User
 app.use(passport.session())
 // Save Flash Messages
@@ -44,7 +44,7 @@ app.use(flash())
 // ===============================================================
 // Routes API
 // ===============================================================
-app.use('/', api)
+app.use(api)
 
 // Route Login
 app.get('/login', (req, res) => {

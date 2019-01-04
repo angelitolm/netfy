@@ -4,6 +4,7 @@
 const express = require('express')
 const userCtrl = require('../controllers/user')
 const auth = require('../middelwares/auth')
+const passport = require('passport')
 
 // Initializing API
 const api = express.Router()
@@ -13,11 +14,5 @@ const api = express.Router()
 api.post('/signin', userCtrl.signIn)
 // signUp
 api.post('/signup', userCtrl.signUp)
-
-// api.get('/', (req, res) => {
-//   res.json({
-//     status: 'API is running!!!'
-//   })
-// })
 
 module.exports = api
