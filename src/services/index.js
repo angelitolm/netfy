@@ -3,7 +3,7 @@
 // Import Modules
 const jwt = require('jwt-simple')
 const moment = require('moment')
-const config = require('../../config')
+const { SECRET_TOKEN } = require('../configs/passport')
 
 // Create Token
 function createToken (user) {
@@ -13,14 +13,14 @@ function createToken (user) {
     exp: moment().add(14, 'days').unix()
   }
 
-  return jwt.encode(payload, config.SECRET_TOKEN)
+  return jwt.encode(payload, SECRET_TOKEN)
 }
 
 // Decode Token
 function decodeToken (token) {
   const decoded = new Promise((resolve, reject) => {
     try {
-      const payload = jwt.decode(token, config.SECRET_TOKEN)
+      const payload = jwt.decode(token, SECRET_TOKEN)
 
       if (payload.exp <= moment().unix()) {
         // Message when the token has been expired

@@ -1,21 +1,22 @@
 'use strict'
 
 // Import Modules
-const app = require('./app')
+const app = require('./server')
 const mongoose = require('mongoose')
 
 // Settings
-const config = require('./config')
+const { dbUri } = require('./src/configs/database')
+const { port } = require('./src/configs/app')
 
 // Connection to Database
 mongoose.set('useCreateIndex', true)
-mongoose.connect(config.dbUri, { useNewUrlParser: true })
+mongoose.connect(dbUri, { useNewUrlParser: true })
   .then(db => console.log('MongoDB is running'))
   .catch(err => console.error(err))
 
 // Starting the server
-app.listen(config.port, () => {
-  console.log(`API Rest Netfy running on http://localhost:${config.port}`)
+app.listen(port, () => {
+  console.log(`API Rest Netfy running on http://localhost:${port}`)
 })
 
 module.exports = mongoose
