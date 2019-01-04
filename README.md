@@ -1,6 +1,6 @@
-## Welcome to The Network Gear
+## Welcome to Netfy
 
 ```markdown
-# Coming Soom
+# The Network Gear
 ```
 
