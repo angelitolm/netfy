@@ -11,8 +11,8 @@ const api = express.Router()
 
 // Global Routes
 // signIn
-api.post('/signin', userCtrl.signIn)
+// api.post('/signin', userCtrl.signIn)
 // signUp
-api.post('/signup', userCtrl.signUp)
+// api.post('/signup', userCtrl.signUp)
 
 module.exports = api
