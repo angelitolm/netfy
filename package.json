@@ -37,10 +37,13 @@
     "react-dom": "^16.7.0"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+=======
+>>>>>>> Agregando el fichero dev.js
     "nodemon": "^1.18.9",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0"
