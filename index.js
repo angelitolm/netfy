@@ -13,22 +13,21 @@ const mongoose = require('mongoose')
 // ===============================================================
 // Settings
 // ===============================================================
-const { dbUri } = require('./src/configs/database')
-const { port } = require('./src/configs/app')
+const config = require('./src/configs/parameters')
 
 // ===============================================================
 // Connection to Database
 // ===============================================================
 mongoose.set('useCreateIndex', true)
-mongoose.connect(dbUri, { useNewUrlParser: true })
+mongoose.connect(config.dbUri, { useNewUrlParser: true })
   .then(db => console.log('MongoDB is running'))
   .catch(err => console.error(err))
 
 // ===============================================================
 // Starting the server
 // ===============================================================
-app.listen(port, () => {
-  console.log(`API Rest Netfy running on http://localhost:${port}`)
+app.listen(config.appPort, () => {
+  console.log(`API Rest Netfy running on http://localhost:${config.appPort}`)
 })
 
 module.exports = mongoose

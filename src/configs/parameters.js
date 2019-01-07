@@ -5,10 +5,10 @@
 'use strict'
 
 // ===============================================================
-// Import Modules
+// Global Settings
 // ===============================================================
-import React from 'react'
-import { render } from 'react-dom'
-import App from './App'
-
-render(<App />, document.getElementById('reactApp'))
+module.exports = {
+  dbUri: process.env.MONGODB || 'mongodb://localhost:27017/netfy',
+  appPort: process.env.PORT || 3000,
+  SECRET_TOKEN: 'Mypassword'
+}

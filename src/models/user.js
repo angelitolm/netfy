@@ -1,17 +1,25 @@
+/*
+  This file is a part of Netfy
+  Author: Angel Labrada Massó
+ */
 'use strict'
 
+// ===============================================================
 // Import Modules
+// ===============================================================
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const { Schema } = mongoose
 const bcrypt = require('bcrypt-nodejs')
-const crypto = require('crypto')
 
+// ===============================================================
 // UserSchema
+// ===============================================================
 const UserSchema = new Schema({
-  username: { type: String, unique: true, lowercase: true },
-  email: { type: String, unique: true, lowercase: true },
+  fullName: { type: String, require: true },
+  email: { type: String, lowercase: true, require: true },
+  username: { type: String, lowercase: true, require: true },
+  password: { type: String, select: false, require: true },
   enabled: Boolean,
-  password: { type: String, select: false },
   signupDate: { type: Date, default: Date.now() },
   lastLogin: Date,
   locked: Boolean,
@@ -20,38 +28,26 @@ const UserSchema = new Schema({
   roles: String,
   credentialsExpired: Date,
   credentialExpireAt: Date,
-  name: String,
   phone: Number,
   address: String,
   locale: String,
   avatar: String
 })
 
-// Befor save User
-UserSchema.pre('save', (next) => {
-  let user = this
+// ===============================================================
+// Encrypt Password
+// ===============================================================
+UserSchema.methods.encryptPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10)
+  const hash = await bcrypt.hash(password, salt)
+  return hash
+}
 
-  // Salt
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) return next(err)
-
-    // Encrypt Password
-    bcrypt.hash(user.password, salt, null, (err, hash) => {
-      if (err) return next(err)
-
-      user.password = hash
-      next()
-    })
-  })
-})
-
-// Avatar
-UserSchema.methods.gravatar = function () {
-  if (!this.email) return `https://gravatar.com/avatar/?s=200&d=retro`
-
-  // Encrypt picture name
-  const md5 = crypto.createHash('md5').update(this.email).digest('hex')
-  return `https://gravatar.com/avatar/${md5}?s=200&d=retro`
+// ===============================================================
+// Match Password
+// ===============================================================
+UserSchema.methods.matchPassword = async (password) => {
+  return bcrypt.compare(password, this.password)
 }
 
 module.exports = mongoose.model('User', UserSchema)
