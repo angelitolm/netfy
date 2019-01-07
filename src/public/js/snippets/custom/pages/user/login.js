@@ -22,7 +22,7 @@ var SnippetLogin = function () {
                 var a = $(this), l = $(this).closest("form");
                 l.validate({
                     rules: {
-                        email: {required: !0, email: !0},
+                        username: {required: !0},
                         password: {required: !0}
                     }
                 }), l.valid() && (a.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), l.ajaxSubmit({
@@ -39,18 +39,34 @@ var SnippetLogin = function () {
                 r.validate({
                     rules: {
                         fullname: {required: !0},
+                        username: {required: !0},
                         email: {required: !0, email: !0},
                         password: {required: !0},
                         rpassword: {required: !0},
                         agree: {required: !0}
                     }
                 }), r.valid() && (t.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), r.ajaxSubmit({
-                    url: "",
+                    url: "/signup",
+                    method: "POST",
                     success: function (l, s, n, o) {
+                    	// let status = l.status
+                    	// let message = {
+                    	// 	title: "",
+                    	// 	message: ""
+                    	// }
+                    	// console.log(l.status)
+                    	// if (status == 'error_pwd') {
+                    	// 	message[0] = "error"
+                    	// 	message[1] = "!!!Oops, something went wrong, the passwords miss match."
+                    	// }
+                    	// else if (status == 'success') {
+                    	// 	message[0] = "success"
+                    	// 	message[1] = "Thank you. To complete your registration please check your email."
+                    	// }
                         setTimeout(function () {
                             t.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), r.clearForm(), r.validate().resetForm(), a();
                             var l = e.find(".m-login__signin form");
-                            l.clearForm(), l.validate().resetForm(), i(l, "success", "Thank you. To complete your registration please check your email.")
+                            l.clearForm(), l.validate().resetForm(), i(l, 'message[0]', 'message[1]')
                         }, 2e3)
                     }
                 }))
@@ -59,9 +75,9 @@ var SnippetLogin = function () {
                 var t = $(this), r = $(this).closest("form");
                 r.validate({
                     rules: {
-                        email: {
+                        username: {
                             required: !0,
-                            email: !0
+                            username: !0
                         }
                     }
                 }), r.valid() && (t.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), r.ajaxSubmit({

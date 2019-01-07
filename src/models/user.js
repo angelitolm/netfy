@@ -15,10 +15,11 @@ const bcrypt = require('bcrypt-nodejs')
 // UserSchema
 // ===============================================================
 const UserSchema = new Schema({
-  username: { type: String, unique: true, lowercase: true },
-  email: { type: String, unique: true, lowercase: true },
+  fullName: { type: String, require: true },
+  email: { type: String, lowercase: true, require: true },
+  username: { type: String, lowercase: true, require: true },
+  password: { type: String, select: false, require: true },
   enabled: Boolean,
-  password: { type: String, select: false },
   signupDate: { type: Date, default: Date.now() },
   lastLogin: Date,
   locked: Boolean,
@@ -27,7 +28,6 @@ const UserSchema = new Schema({
   roles: String,
   credentialsExpired: Date,
   credentialExpireAt: Date,
-  name: String,
   phone: Number,
   address: String,
   locale: String,
