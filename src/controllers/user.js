@@ -6,33 +6,30 @@ const service = require('../services')
 
 // SignUp
 function signUp (req, res) {
-  // let errors = []
-  // const { fullName, email, username, password, rpassword } = req.body
-
-  console.log(req.body.fullName)
-
-  return res.status(200).send(req.body.fullName)
+  console.log(req.body)
+  let errors = []
+  const { fullName, email, username, password, rpassword } = req.body
 
   // Pre Validations
   // Password miss match
-  // if (password !== rpassword) errors.push({ status_msg: 'error_pwd_miss_match' })
-  // // Password don't have max length
-  // if (password.length < 6) errors.push({ status_msg: 'error_pwd_length' })
-  // // Send errors
-  // if (errors.length > 0) res.status(500).send({ errors, fullName, email, username, password, rpassword })
-  // else {
-  //   // Looking for email coincidence
-  //   const emailUser = User.findOne({ email: email })
-  //   if (emailUser) {
-  //     req.status(406).send({ status_msg: 'err_email_exist' })
-  //   } else {
-  //     // Save a new User
-  //     const newUser = new User({ fullName, email, username, password })
-  //     newUser.password = newUser.encryptPassword(password)
-  //     req.status(200).send({ status_msg: 'success' })
-  //     res.redirect('/dashboard')
-  //   }
-  // }
+  if (password !== rpassword) errors.push({ status_msg: 'error_pwd_miss_match' })
+  // Password don't have max length
+  if (password.length < 6) errors.push({ status_msg: 'error_pwd_length' })
+  // Send errors
+  if (errors.length > 0) res.status(500).send({ errors, fullName, email, username, password, rpassword })
+  else {
+    // Looking for email coincidence
+    const emailUser = User.findOne({ email: email })
+    if (emailUser) {
+      req.status(406).send({ status_msg: 'err_email_exist' })
+    } else {
+      // Save a new User
+      const newUser = new User({ fullName, email, username, password })
+      newUser.password = newUser.encryptPassword(password)
+      req.status(200).send({ status_msg: 'success' })
+      res.redirect('/dashboard')
+    }
+  }
   // const user = new User({
   //   fullName: req.body.fullName,
   //   email: req.body.email,

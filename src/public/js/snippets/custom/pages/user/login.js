@@ -34,11 +34,14 @@ var SnippetLogin = function () {
                     }
                 }))
             }), $("#m_login_signup_submit").click(function (l) {
+            	const formLogin = document.querySelector('#form_signup')
+                const formData = new FormData(formLogin)
+
                 l.preventDefault();
                 var t = $(this), r = $(this).closest("form");
                 r.validate({
                     rules: {
-                        fullname: {required: !0},
+                        fullName: {required: !0},
                         username: {required: !0},
                         email: {required: !0, email: !0},
                         password: {required: !0},
@@ -48,25 +51,27 @@ var SnippetLogin = function () {
                 }), r.valid() && (t.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), r.ajaxSubmit({
                     url: "/signup",
                     method: "POST",
+                    body: formData,
                     success: function (l, s, n, o) {
-                    	// let status = l.status
-                    	// let message = {
-                    	// 	title: "",
-                    	// 	message: ""
-                    	// }
-                    	// console.log(l.status)
-                    	// if (status == 'error_pwd') {
-                    	// 	message[0] = "error"
-                    	// 	message[1] = "!!!Oops, something went wrong, the passwords miss match."
-                    	// }
-                    	// else if (status == 'success') {
-                    	// 	message[0] = "success"
-                    	// 	message[1] = "Thank you. To complete your registration please check your email."
-                    	// }
+                    	console.log(formData)
+                    	let status = l.status
+                    	let message = {
+                    		title: "",
+                    		message: ""
+                    	}
+                    	console.log(l.status)
+                    	if (status == 'error_pwd') {
+                    		message[0] = "error"
+                    		message[1] = "!!!Oops, something went wrong, the passwords miss match."
+                    	}
+                    	else if (status == 'success') {
+                    		message[0] = "success"
+                    		message[1] = "Thank you. To complete your registration please check your email."
+                    	}
                         setTimeout(function () {
                             t.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), r.clearForm(), r.validate().resetForm(), a();
                             var l = e.find(".m-login__signin form");
-                            l.clearForm(), l.validate().resetForm(), i(l, 'message[0]', 'message[1]')
+                            l.clearForm(), l.validate().resetForm(), i(l, message[0], message[1])
                         }, 2e3)
                     }
                 }))

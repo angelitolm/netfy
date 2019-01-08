@@ -15,11 +15,22 @@ const userCtrl = require('../controllers/user')
 // Routes
 // ===============================================================
 // Route SignIn
-router.post('/', passport.authenticate('local', {
+router.post('/signin', passport.authenticate('local', {
   successRedirect: '/dashboard',
-  failureFlash: true
+  failureFlash: true,
+  failureRedirect: '/'
 }))
 // Route SignUn
+// router.get('/signup', async (req, res) => {
+//   res.status(200).send({ message: 'signup' })
+// })
+router.get('/signup', userCtrl.signUp)
+
+// router.post('/signup', passport.authenticate('local'), (req, res) => {
+//   // If this function gets called, authentication was successful.
+//   // `req.user` contains the authenticated user.
+//   // res.redirect('/dashboard')
+// })
 router.post('/signup', userCtrl.signUp)
 // Route Logout
 router.get('/logout', (req, res) => {
