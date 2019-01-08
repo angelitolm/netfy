@@ -14,7 +14,7 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
 const morgan = require('morgan')
-const api = require('./src/routes/user')
+const router = require('./src/routes/user')
 const { SECRET_TOKEN } = require('./src/configs/parameters')
 
 // ===============================================================
@@ -57,7 +57,7 @@ app.use((req, res, next) => {
 // ===============================================================
 // Routes API
 // ===============================================================
-// app.use(api)
+app.use(router)
 
 // Route Login
 // app.get('/login', (req, res) => {
