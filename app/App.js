@@ -10,7 +10,6 @@
 import React, { Component } from 'react'
 
 class App extends Component {
-
   // SignUp
   // signUp () {
   //   alert('holaaaaa')
@@ -57,7 +56,7 @@ class App extends Component {
             <h3 className='m-login__title'>Sign Up</h3>
             <div className='m-login__desc'>Enter your details to create your account:</div>
           </div>
-          <form className='m-login__form m-form' method='post' onSubmit={this.signUp}>
+          <form id='form_signup' className='m-login__form m-form' action='/signup' method='POST'>
             <div className='form-group m-form__group'>
               <input className='form-control m-input' type='text' placeholder='Fullname' name='fullName' autoComplete='off' />
             </div>
