@@ -10,7 +10,6 @@
 const router = require('express').Router()
 const passport = require('passport')
 const userCtrl = require('../controllers/user')
-const User = require('../models/user')
 
 // ===============================================================
 // Routes
@@ -20,9 +19,6 @@ router.post('/', passport.authenticate('local', {
   successRedirect: '/dashboard',
   failureFlash: true
 }))
-// router.post('/signup', (req, res) => {
-//   res.status(200).send({ status: false })
-// })
 // Route SignUn
 router.post('/signup', userCtrl.signUp)
 // Route Logout
