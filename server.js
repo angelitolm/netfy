@@ -9,19 +9,20 @@
 // ===============================================================
 const express = require('express')
 const path = require('path')
+const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
 const morgan = require('morgan')
-const routeUser = require('./src/routes/user')
+const apiuser = require('./src/routes/user')
 const { SECRET_TOKEN } = require('./src/configs/parameters')
 
 // ===============================================================
 // Initializing App with Express Framework
 // ===============================================================
 const app = express()
-require('./src/configs/passport')
+// require('./src/configs/passport')
 
 // ===============================================================
 // Middleware
@@ -30,6 +31,8 @@ require('./src/configs/passport')
 app.use(morgan('dev'))
 // App use format json for all requests
 app.use(express.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ 'extended': 'false' }))
 app.use(methodOverride('_method'))
 // Using Session Variables
 app.use(session({
@@ -57,7 +60,7 @@ app.use((req, res, next) => {
 // ===============================================================
 // Routes
 // ===============================================================
-app.use(routeUser)
+app.use(apiuser)
 
 // Route Login
 // app.get('/login', (req, res) => {

@@ -56,9 +56,9 @@ class App extends Component {
             <h3 className='m-login__title'>Sign Up</h3>
             <div className='m-login__desc'>Enter your details to create your account:</div>
           </div>
-          <form id='form_signup' className='m-login__form m-form' action='/signup' method='POST'>
+          <form id='form_signup' className='m-login__form m-form'>
             <div className='form-group m-form__group'>
-              <input className='form-control m-input' type='text' placeholder='Fullname' name='fullName' autoComplete='off' />
+              <input className='form-control m-input' type='text' placeholder='Fullname' name='name' autoComplete='off' />
             </div>
             <div className='form-group m-form__group'>
               <input className='form-control m-input' type='text' placeholder='Email' name='email' autoComplete='off' />

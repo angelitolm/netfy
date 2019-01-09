@@ -41,7 +41,7 @@ var SnippetLogin = function () {
                 var t = $(this), r = $(this).closest("form");
                 r.validate({
                     rules: {
-                        fullName: {required: !0},
+                        name: {required: !0},
                         username: {required: !0},
                         email: {required: !0, email: !0},
                         password: {required: !0},
@@ -51,20 +51,24 @@ var SnippetLogin = function () {
                 }), r.valid() && (t.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), r.ajaxSubmit({
                     url: "/signup",
                     method: "POST",
-                    body: formData,
                     success: function (l, s, n, o) {
-                    	console.log(formData)
-                    	let status = l.status
+
+                    	let status = l.status_msg
                     	let message = {
                     		title: "",
                     		message: ""
                     	}
-                    	console.log(l.status)
-                    	if (status == 'error_pwd') {
+
+                    	if (status == 'error_pwd_miss_match') {
                     		message[0] = "error"
                     		message[1] = "!!!Oops, something went wrong, the passwords miss match."
-                    	}
-                    	else if (status == 'success') {
+                    	} else if (status == 'error_pwd_length') {
+                    		message[0] = "error"
+                    		message[1] = "!!!Oops, something went wrong, the passwords is very short."
+                    	} else if (status == 'err_email_exist') {
+                    		message[0] = "error"
+                    		message[1] = "!!!Oops, something went wrong, the email is already exist."
+                    	} else if (status == 'success') {
                     		message[0] = "success"
                     		message[1] = "Thank you. To complete your registration please check your email."
                     	}
