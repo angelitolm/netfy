@@ -29,8 +29,6 @@ require('../config/passport');
 // Debug by console everything the requests to making on web server
 api.use(morgan('dev'))
 // API use format json for all requests
-// api.use(express.json())
-// api.use(bodyParser.json())
 api.use(bodyParser.urlencoded({ 'extended': 'false' }))
 api.use(methodOverride('_method'))
 // Using Session Variables
@@ -68,6 +66,5 @@ api.use(useroute) // User Route
 // Static files
 // ===============================================================
 api.use(express.static(path.join(__dirname, '/public')))
-console.log(__dirname)
 
 module.exports = api
