@@ -17,7 +17,7 @@ const UserSchema = new Schema({
   name: { type: String, require: true },
   email: { type: String, lowercase: true, require: true },
   username: { type: String, lowercase: true, require: true },
-  password: { type: String, select: false, require: true },
+  password: { type: String, require: true },
   enabled: { type: Boolean, default: true },
   signupDate: { type: Date, default: Date.now() },
   lastLogin: Date,
@@ -34,19 +34,17 @@ const UserSchema = new Schema({
 })
 
 // ===============================================================
-// Encrypt Password
+// Check Password and Encrypt Password
 // ===============================================================
-UserSchema.methods.encryptPassword = async (password) => {
-  const salt = await bcrypt.genSalt(10)
-  const hash = await bcrypt.hash(password, salt)
-  return hash
-}
-
-// ===============================================================
-// Match Password
-// ===============================================================
-UserSchema.methods.matchPassword = async (password) => {
-  return bcrypt.compare(password, this.password)
+UserSchema.methods = {
+  // Check Password
+	checkPassword: function (inputPassword) {
+		return bcrypt.compareSync(inputPassword, this.password)
+	},
+  // Encrypt Password
+	hashPassword: plainTextPassword => {
+		return bcrypt.hashSync(plainTextPassword, 10)
+	}
 }
 
 module.exports = mongoose.model('User', UserSchema)

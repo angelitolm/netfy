@@ -9,6 +9,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
+const methodOverride = require('method-override')
 const morgan = require('morgan')
 const passport = require('passport')
 const path = require('path')
@@ -20,6 +21,7 @@ const session = require('express-session')
 // Initializing API with Express Framework
 // ===============================================================
 const api = express()
+require('../config/passport');
 
 // ===============================================================
 // Middleware
@@ -27,15 +29,16 @@ const api = express()
 // Debug by console everything the requests to making on web server
 api.use(morgan('dev'))
 // API use format json for all requests
-api.use(express.json())
-api.use(bodyParser.json())
+// api.use(express.json())
+// api.use(bodyParser.json())
 api.use(bodyParser.urlencoded({ 'extended': 'false' }))
+api.use(methodOverride('_method'))
 // Using Session Variables
 api.use(session({
   secret: SECRET_TOKEN,
   resave: true,
-  saveUninitialized: true,
-  cookie: { secure: true }
+  saveUninitialized: true
+  // cookie: { secure: true }
 }))
 // Passport
 api.use(passport.initialize()) // Initializing passport
@@ -56,11 +59,7 @@ api.use((req, res, next) => {
 // ===============================================================
 // Routes
 // ===============================================================
-api.get('/', (req, res) => {
-  res.status(200).send({ message: 'API Rest running here...' })
-})
-// User Route
-api.use(useroute)
+api.use(useroute) // User Route
 
 // ===============================================================
 // Static files

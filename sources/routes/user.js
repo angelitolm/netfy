@@ -8,19 +8,25 @@
 // ===============================================================
 const useroute = require('express').Router()
 const passport =require('passport')
-const userCtrl = require('../controllers/user')
+const { SignUp } = require('../controllers/user')
 
 // ===============================================================
 // Routes
 // ===============================================================
+// Route Dashboard
+useroute.get('/dashboard', (req, res) => {
+  res.status(200).send({ message: 'Welcome to Dashboard' })
+})
+
 // Route SignIn
 useroute.post('/signin', passport.authenticate('local', {
   successRedirect: '/dashboard',
-  failureFlash: true,
-  failureRedirect: '/'
-}))
-// Route SignUp
-useroute.post('/signup', userCtrl.SignUp)
+  failureRedirect: '/',
+  failureFlash: true
+}));
+
+useroute.post('/signup', SignUp) // Route SignUp
+
 // Route Logout
 useroute.post('/logout', (req, res) => {
   req.logout()
