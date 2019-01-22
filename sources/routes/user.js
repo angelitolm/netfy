@@ -6,7 +6,8 @@
 // ===============================================================
 // Import Modules
 // ===============================================================
-const useroute = require('express').Router()
+const express = require('express')
+const router = express.Router()
 const passport =require('passport')
 const { SignUp } = require('../controllers/user')
 
@@ -14,24 +15,50 @@ const { SignUp } = require('../controllers/user')
 // Routes
 // ===============================================================
 // Route Dashboard
-useroute.get('/dashboard', (req, res) => {
-  res.status(200).send({ message: 'Welcome to Dashboard' })
+router.get('/api/dashboard', (req, res, next) => {
+  console.log('===== user!!======')
+  console.log(req.user)
+  if (req.user) {
+      res.json({ user: req.user })
+  } else {
+      res.json({ user: null })
+  }
+})
+
+router.get('/', (req, res, next) => {
+  console.log('===== user!!======')
+  console.log(req.user)
+  if (req.user) {
+      res.json({ user: req.user })
+  } else {
+      res.json({ user: null })
+  }
 })
 
 // Route SignIn
-useroute.post('/signin', passport.authenticate('local', {
-  successRedirect: '/dashboard',
-  failureRedirect: '/',
-  failureFlash: true
-}));
+router.post('/api/signin',
+  function (req, res, next) {
+    console.log('routes/user.js, login, req.body: ');
+    console.log(req.body)
+    next()
+  },
+  passport.authenticate('local'),
+  (req, res) => {
+    console.log('logged in', req.user);
+    let userInfo = {
+        username: req.user.username
+    };
+    res.send(userInfo);
+  }
+)
 
-useroute.post('/signup', SignUp) // Route SignUp
+router.post('/api/signup', SignUp) // Route SignUp
 
 // Route Logout
-useroute.post('/logout', (req, res) => {
+router.post('/api/logout', (req, res) => {
   req.logout()
   req.flash('success_msg', 'You are loggued out now')
-  res.redirect('/')
+  res.redirect('/api')
 })
 
-module.exports = useroute
+module.exports = router
