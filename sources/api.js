@@ -8,9 +8,16 @@
 // ===============================================================
 const express = require('express')
 const bodyParser = require('body-parser')
-const flash = require('connect-flash')
-const methodOverride = require('method-override')
 const morgan = require('morgan')
+const passport = require('../config/passport')
+const { SECRET_TOKEN, dbUri } = require('../config/parameters')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+
+// ===============================================================
+// Route requires
+// ===============================================================
+const user = require('./routes/user')
 const passport = require('passport')
 const path = require('path')
 const user = require('./routes/user')
@@ -33,6 +40,10 @@ api.use(morgan('dev'))
 // API use format json for all requests
 api.use(bodyParser.urlencoded({ 'extended': 'false' }))
 api.use(bodyParser.json())
+// Using Session Variables
+api.use(session({
+  secret: SECRET_TOKEN,
+  resave: false, //required
 // api.use(methodOverride('_method'))
 // Using Session Variables
 api.use(session({
@@ -44,7 +55,6 @@ api.use(session({
 // Passport
 api.use(passport.initialize()) // Initializing passport
 api.use(passport.session()) // Save Authentication User
-api.use(flash()) // Save Flash Messages
 
 // ===============================================================
 // Global Variables
@@ -80,6 +90,6 @@ api.get('/api/user', (req, res, next) => {
 // ===============================================================
 // Static files
 // ===============================================================
-api.use(express.static(path.join(__dirname, '/public')))
+// api.use(express.static(path.join(__dirname, '/public')))
 
 module.exports = api

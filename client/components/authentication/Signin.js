@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 /*
   This file is a part of Netfy
   Author: Angel Labrada Massó
@@ -6,11 +7,10 @@
 // ===============================================================
 // Import Modules
 // ===============================================================
-import React, { Component } from 'react';
-import superagent from 'superagent';
-import { Redirect } from 'react-router-dom';
-
-// import Dashboard from '../Dashboard';
+import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+import axios from 'axios'
+import '../Dashboard'
 
 // ===============================================================
 // Web font
@@ -28,8 +28,8 @@ import { Redirect } from 'react-router-dom';
 // Global Theme Styles
 // ===============================================================
 import '../../assets/app/loginstyle.css';
-import '../../assets/vendors/base/vendors.bundle.css';
-import '../../assets/demo/default/base/style.bundle.css';
+// import '../../assets/vendors/base/vendors.bundle.css';
+// import '../../assets/demo/default/base/style.bundle.css';
 
 // import '../../assets/demo/default/media/img/logo/favicon.ico';
 
@@ -53,8 +53,8 @@ import '../../assets/demo/default/base/style.bundle.css';
 
 class Login extends Component {
   // constructor
-  constructor() {
-      super()
+  constructor(props) {
+      super(props)
       this.state = {
           username: '',
           password: '',
@@ -72,23 +72,23 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
-      event.preventDefault()
-      console.log('handleSubmit')
+        event.preventDefault()
+        console.log('handleSubmit')
 
-      superagent
-          .post('http://localhost:4000/api/signin', {
+        axios
+            .post('/signin', {
                 username: this.state.username,
                 password: this.state.password
-          })
-          .then(response => {
-            console.log('login response: ')
+            })
+            .then(response => {
+                console.log('login response: ')
                 console.log(response)
                 if (response.status === 200) {
                     // update App.js state
-                    this.props.updateUser({
-                        loggedIn: true,
-                        username: response.body.username
-                    }).bind(this)
+                    // this.props.updateUser({
+                    //     loggedIn: true,
+                    //     username: response.data.username
+                    // })
                     // update the state to redirect to home
                     this.setState({
                         redirectTo: '/dashboard'
@@ -99,13 +99,9 @@ class Login extends Component {
                 console.log(error);
 
             })
-
-          // event.target.reset()
     }
 
   render() {
-    console.log('navbar render, props: ')
-    console.log(this.props);
     if (this.state.redirectTo) {
           return <Redirect to={{ pathname: this.state.redirectTo }} />
     } else {
